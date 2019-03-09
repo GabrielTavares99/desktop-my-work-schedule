@@ -17,8 +17,8 @@ public class TesteApp {
 //        }
 //        MarkRepository marcacaoRepository = new MarkRepository();
 //        List<Mark> todas = marcacaoRepository.todas();
-//        markManager.setMarcacoes(todas);
-//        long minutosTrabalhados = markManager.calcularTempoPorDia(LocalDate.of(2019, Month.MARCH, 5));
-//        System.out.println(markManager.formataMinutosTrabalhadosEmHoras(minutosTrabalhados));
+//        markManager.setMarks(todas);
+//        long minutosTrabalhados = markManager.getTotalTimeBySpecificDate(LocalDate.of(2019, Month.MARCH, 5));
+//        System.out.println(markManager.formatSecondsIntoHHMMSS(minutosTrabalhados));
     }
 }

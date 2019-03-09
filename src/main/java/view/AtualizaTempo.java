@@ -21,13 +21,13 @@ public class AtualizaTempo implements Runnable {
     public void run() {
         while (true) {
             try {
-                if (markManager.isContando()) {
+                if (markManager.isTimeRunning()) {
                     lblStatus.setText("CONTANDO");
                 } else {
                     lblStatus.setText("PARADO");
                 }
-                long l = markManager.calcularTempoPorDia(LocalDate.now());
-                lblCurrentTime.setText(markManager.formataMinutosTrabalhadosEmHoras(l));
+                double l = markManager.getTotalTimeBySpecificDate(LocalDate.now());
+                lblCurrentTime.setText(markManager.formatSecondsIntoHHMMSS(l));
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();

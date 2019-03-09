@@ -13,10 +13,10 @@ import java.util.UUID;
 public class MarkManager {
 
     private static MarkManager markManager;
-    private List<Mark> marcacoes = new ArrayList<>();
-    private Mark ultimaMark = null;
-    private boolean contando;
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private List<Mark> marks = new ArrayList<>();
+    private Mark lastMark = null;
+    private boolean timeRunning;
+    private DateTimeFormatter dateTimeFormatterPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private MarkManager() {
 
@@ -28,67 +28,64 @@ public class MarkManager {
         return markManager;
     }
 
-    public Mark getUltimaMark() {
-        return ultimaMark;
+    public Mark getLastMark() {
+        return lastMark;
     }
 
     public void fazerMarcacao() {
-        if (ultimaMark == null || ultimaMark.getHoraFim() != null) {
-            ultimaMark = new Mark(UUID.randomUUID().toString().substring(0, 4), LocalDateTime.now(), null);
-            marcacoes.add(ultimaMark);
-            contando = true;
+        if (lastMark == null || lastMark.getEndDateTime() != null) {
+            lastMark = new Mark(UUID.randomUUID().toString().substring(0, 4), LocalDateTime.now(), null);
+            marks.add(lastMark);
+            timeRunning = true;
         } else {
-            ultimaMark.setHoraFim(LocalDateTime.now());
-            contando = false;
+            lastMark.setEndDateTime(LocalDateTime.now());
+            timeRunning = false;
         }
     }
 
-    public long calcularTempoPorDia(LocalDate dataPesquisa) {
+    public double getTotalTimeBySpecificDate(LocalDate dataPesquisa) {
         List<Long> amount = new ArrayList<>();
 
-        marcacoes.forEach(mark -> {
-            if (mark.getHoraInicio().toLocalDate().isEqual(dataPesquisa)) {
-                System.out.println("achou");
-                amount.add(calculaTempo(mark.getHoraInicio(), mark.getHoraFim()));
+        marks.forEach(mark -> {
+            if (mark.getStartDateTime().toLocalDate().isEqual(dataPesquisa)) {
+                amount.add(calculaTempo(mark.getStartDateTime(), mark.getEndDateTime()));
             }
         });
         return amount.stream().mapToLong(Long::intValue).sum();
     }
 
-    public String formataMinutosTrabalhadosEmHoras(long minutosTrabalhados) {
+    public String formatSecondsIntoHHMMSS(double spentSeconds) {
         String a = "%02d:%02d:%02d";
-//        return String.format(a, TimeUnit.MINUTES.toHours(minutosTrabalhados), TimeUnit.MILLISECONDS.toMinutes(minutosTrabalhados) - TimeUnit.HOURS.toMinutes(
-//                TimeUnit.MILLISECONDS.toHours(minutosTrabalhados)));
-        long hours = minutosTrabalhados / 60; //since both are ints, you get an int
-        long minutes = minutosTrabalhados % 60;
-        long second = minutosTrabalhados / (24 * 3600);
-        return String.format(a, hours, minutes, second);
+        int hours = (int) spentSeconds / 3600;
+        int remainder = (int) spentSeconds - hours * 3600;
+        int minutes = remainder / 60;
+        remainder = remainder - minutes * 60;
+        int seconds = remainder;
+        return String.format(a, hours, minutes, seconds);
     }
 
     public long calculaTempo(LocalDateTime inicio, LocalDateTime fim) {
         if (fim == null)
             fim = LocalDateTime.now();
-        long between = ChronoUnit.MINUTES.between(inicio, fim);
-        System.out.println(between);
-        return between;
+        return ChronoUnit.SECONDS.between(inicio, fim);
     }
 
     public void listar() {
-        marcacoes.forEach(mark -> {
-            String s = mark.getHoraFim() == null ? null : mark.getHoraFim().format(dateTimeFormatter);
-            System.out.println(mark.getDescricao() + " " + mark.getHoraInicio().format(dateTimeFormatter) + " " + s);
+        marks.forEach(mark -> {
+            String s = mark.getEndDateTime() == null ? null : mark.getEndDateTime().format(dateTimeFormatterPattern);
+            System.out.println(mark.getDescription() + " " + mark.getStartDateTime().format(dateTimeFormatterPattern) + " " + s);
         });
     }
 
-    public List<Mark> getMarcacoes() {
-        return marcacoes;
+    public List<Mark> getMarks() {
+        return marks;
     }
 
-    public void setMarcacoes(List<Mark> marcacoes) {
-        this.marcacoes = marcacoes;
+    public void setMarks(List<Mark> marks) {
+        this.marks = marks;
     }
 
-    public boolean isContando() {
-        return contando;
+    public boolean isTimeRunning() {
+        return timeRunning;
     }
 }

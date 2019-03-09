@@ -6,48 +6,48 @@ import java.util.StringJoiner;
 
 public class Mark {
 
-    private LocalDateTime horaInicio;
-    private String descricao;
-    private LocalDateTime horaFim;
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private LocalDateTime startDateTime;
+    private String description;
+    private LocalDateTime endDateTime;
+    private DateTimeFormatter dateTimeFormatterPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-    public Mark(String descricao, LocalDateTime horaInicio, LocalDateTime horaFim) {
-        this.horaInicio = horaInicio;
-        this.descricao = descricao;
-        this.horaFim = horaFim;
+    public Mark(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        this.startDateTime = startDateTime;
+        this.description = description;
+        this.endDateTime = endDateTime;
     }
 
-    public LocalDateTime getHoraFim() {
-        return horaFim;
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setHoraFim(LocalDateTime horaFim) {
-        this.horaFim = horaFim;
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
-    public LocalDateTime getHoraInicio() {
-        return horaInicio;
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setHoraInicio(LocalDateTime horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
         StringJoiner stringBuilder = new StringJoiner(" ");
-        stringBuilder.add(descricao);
-        stringBuilder.add(horaInicio.format(dateTimeFormatter));
-        if (horaFim != null)
-            stringBuilder.add(horaFim.format(dateTimeFormatter));
+        stringBuilder.add(description);
+        stringBuilder.add(startDateTime.format(dateTimeFormatterPattern));
+        if (endDateTime != null)
+            stringBuilder.add(endDateTime.format(dateTimeFormatterPattern));
         return stringBuilder.toString();
     }
 }

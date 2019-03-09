@@ -13,9 +13,9 @@ public class Principal {
         List<Mark> todas = markRepository.todas();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         todas.forEach(mark -> {
-            long between = ChronoUnit.MINUTES.between(mark.getHoraInicio(), mark.getHoraFim());
+            long between = ChronoUnit.MINUTES.between(mark.getStartDateTime(), mark.getEndDateTime());
             System.out.println(between);
-            System.out.printf("%-30s %s %s\n", mark.getDescricao(), mark.getHoraInicio().format(dateTimeFormatter), mark.getHoraFim().format(dateTimeFormatter));
+            System.out.printf("%-30s %s %s\n", mark.getDescription(), mark.getStartDateTime().format(dateTimeFormatter), mark.getEndDateTime().format(dateTimeFormatter));
 
 
 //        Period between = Period.between(LocalDate.of(1999, Month.MARCH, 14), LocalDate.now());

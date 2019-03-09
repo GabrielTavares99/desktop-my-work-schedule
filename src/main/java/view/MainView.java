@@ -17,7 +17,7 @@ public class MainView extends JFrame {
         BoxLayout boxLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
         setLayout(boxLayout);
 
-        setSize(300, 600);
+        setSize(330, 600);
         setResizable(false);
         setTitle("My Work Schedule");
 
@@ -45,10 +45,10 @@ public class MainView extends JFrame {
         btnMark.addActionListener(e -> {
             markManager.fazerMarcacao();
             jList.removeAll();
-            objectDefaultListModel.removeElement(markManager.getUltimaMark());
-            objectDefaultListModel.addElement(markManager.getUltimaMark());
-            long l = markManager.calcularTempoPorDia(LocalDate.now());
-            lblStatus.setText(markManager.formataMinutosTrabalhadosEmHoras(l));
+            objectDefaultListModel.removeElement(markManager.getLastMark());
+            objectDefaultListModel.addElement(markManager.getLastMark());
+            double l = markManager.getTotalTimeBySpecificDate(LocalDate.now());
+            lblStatus.setText(markManager.formatSecondsIntoHHMMSS(l));
 
         });
         setVisible(true);
