@@ -1,6 +1,7 @@
 package view;
 
-import myworktime.MarcacaoManager;
+
+import managers.MarkManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class MainView extends JFrame {
 
     public MainView() {
 
-        MarcacaoManager marcacaoManager = MarcacaoManager.getInstance();
+        MarkManager markManager = MarkManager.getInstance();
 
         BoxLayout boxLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
         setLayout(boxLayout);
@@ -20,13 +21,13 @@ public class MainView extends JFrame {
         setResizable(false);
         setTitle("My Work Schedule");
 
-        JButton jButton = new JButton("Marcar");
-        jButton.setSize(100, 40);
-        add(jButton);
+        JButton btnMark = new JButton("Marcar");
+        btnMark.setSize(100, 40);
+        add(btnMark);
 
-        JLabel jLabel = new JLabel("f");
-        jLabel.setSize(100, 40);
-        add(jLabel);
+        JLabel lblCurrentTime = new JLabel("00:00:00");
+        lblCurrentTime.setSize(100, 40);
+        add(lblCurrentTime);
 
         JLabel lblStatus = new JLabel("PARADO");
         lblStatus.setSize(100, 40);
@@ -38,16 +39,16 @@ public class MainView extends JFrame {
         jScrollPane.setPreferredSize(new Dimension(100, 100));
         add(jScrollPane);
 
-        Thread thread = new Thread(new AtualizaTempo(jLabel, lblStatus));
+        Thread thread = new Thread(new AtualizaTempo(lblCurrentTime, lblStatus));
         thread.start();
 
-        jButton.addActionListener(e -> {
-            marcacaoManager.fazerMarcacao();
+        btnMark.addActionListener(e -> {
+            markManager.fazerMarcacao();
             jList.removeAll();
-            objectDefaultListModel.removeElement(marcacaoManager.getUltimaMarcacao());
-            objectDefaultListModel.addElement(marcacaoManager.getUltimaMarcacao());
-            long l = marcacaoManager.calcularTempoPorDia(LocalDate.now());
-            lblStatus.setText(marcacaoManager.formataMinutosTrabalhadosEmHoras(l));
+            objectDefaultListModel.removeElement(markManager.getUltimaMark());
+            objectDefaultListModel.addElement(markManager.getUltimaMark());
+            long l = markManager.calcularTempoPorDia(LocalDate.now());
+            lblStatus.setText(markManager.formataMinutosTrabalhadosEmHoras(l));
 
         });
         setVisible(true);

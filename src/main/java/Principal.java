@@ -1,5 +1,5 @@
-import myworktime.domain.Marcacao;
-import myworktime.repository.MarcacaoRepository;
+import domain.Mark;
+import repository.MarkRepository;
 
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -9,19 +9,19 @@ public class Principal {
 
     public static void main(String[] args) {
 
-        MarcacaoRepository marcacaoRepository = new MarcacaoRepository();
-        List<Marcacao> todas = marcacaoRepository.todas();
+        MarkRepository markRepository = new MarkRepository();
+        List<Mark> todas = markRepository.todas();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        todas.forEach(marcacao -> {
-            long between = ChronoUnit.MINUTES.between(marcacao.getHoraInicio(), marcacao.getHoraFim());
+        todas.forEach(mark -> {
+            long between = ChronoUnit.MINUTES.between(mark.getHoraInicio(), mark.getHoraFim());
             System.out.println(between);
-            System.out.printf("%-30s %s %s\n", marcacao.getDescricao(), marcacao.getHoraInicio().format(dateTimeFormatter), marcacao.getHoraFim().format(dateTimeFormatter));
+            System.out.printf("%-30s %s %s\n", mark.getDescricao(), mark.getHoraInicio().format(dateTimeFormatter), mark.getHoraFim().format(dateTimeFormatter));
 
 
-        Period between = Period.between(LocalDate.of(1999, Month.MARCH, 14), LocalDate.now());
-        System.out.println(between.getYears());
-        System.out.println((long)between.getDays()); // ESTRANHO
-        System.out.println((long)between.getMonths());
+//        Period between = Period.between(LocalDate.of(1999, Month.MARCH, 14), LocalDate.now());
+//        System.out.println(between.getYears());
+//        System.out.println((long)between.getDays()); // ESTRANHO
+//        System.out.println((long)between.getMonths());
 
         });
     }

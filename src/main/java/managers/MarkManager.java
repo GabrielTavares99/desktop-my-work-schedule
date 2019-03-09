@@ -1,4 +1,6 @@
-import myworktime.domain.Marcacao;
+package managers;
+
+import domain.Mark;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,35 +10,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MarcacaoManager {
+public class MarkManager {
 
-    private static MarcacaoManager marcacaoManager;
-    private List<Marcacao> marcacoes = new ArrayList<>();
-    private Marcacao ultimaMarcacao = null;
+    private static MarkManager markManager;
+    private List<Mark> marcacoes = new ArrayList<>();
+    private Mark ultimaMark = null;
     private boolean contando;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    private MarcacaoManager() {
+    private MarkManager() {
 
     }
 
-    public static MarcacaoManager getInstance() {
-        if (marcacaoManager == null)
-            return marcacaoManager = new MarcacaoManager();
-        return marcacaoManager;
+    public static MarkManager getInstance() {
+        if (markManager == null)
+            return markManager = new MarkManager();
+        return markManager;
     }
 
-    public Marcacao getUltimaMarcacao() {
-        return ultimaMarcacao;
+    public Mark getUltimaMark() {
+        return ultimaMark;
     }
 
     public void fazerMarcacao() {
-        if (ultimaMarcacao == null || ultimaMarcacao.getHoraFim() != null) {
-            ultimaMarcacao = new Marcacao(UUID.randomUUID().toString().substring(0, 4), LocalDateTime.now(), null);
-            marcacoes.add(ultimaMarcacao);
+        if (ultimaMark == null || ultimaMark.getHoraFim() != null) {
+            ultimaMark = new Mark(UUID.randomUUID().toString().substring(0, 4), LocalDateTime.now(), null);
+            marcacoes.add(ultimaMark);
             contando = true;
         } else {
-            ultimaMarcacao.setHoraFim(LocalDateTime.now());
+            ultimaMark.setHoraFim(LocalDateTime.now());
             contando = false;
         }
     }
@@ -44,10 +46,10 @@ public class MarcacaoManager {
     public long calcularTempoPorDia(LocalDate dataPesquisa) {
         List<Long> amount = new ArrayList<>();
 
-        marcacoes.forEach(marcacao -> {
-            if (marcacao.getHoraInicio().toLocalDate().isEqual(dataPesquisa)) {
+        marcacoes.forEach(mark -> {
+            if (mark.getHoraInicio().toLocalDate().isEqual(dataPesquisa)) {
                 System.out.println("achou");
-                amount.add(calculaTempo(marcacao.getHoraInicio(), marcacao.getHoraFim()));
+                amount.add(calculaTempo(mark.getHoraInicio(), mark.getHoraFim()));
             }
         });
         return amount.stream().mapToLong(Long::intValue).sum();
@@ -72,17 +74,17 @@ public class MarcacaoManager {
     }
 
     public void listar() {
-        marcacoes.forEach(marcacao -> {
-            String s = marcacao.getHoraFim() == null ? null : marcacao.getHoraFim().format(dateTimeFormatter);
-            System.out.println(marcacao.getDescricao() + " " + marcacao.getHoraInicio().format(dateTimeFormatter) + " " + s);
+        marcacoes.forEach(mark -> {
+            String s = mark.getHoraFim() == null ? null : mark.getHoraFim().format(dateTimeFormatter);
+            System.out.println(mark.getDescricao() + " " + mark.getHoraInicio().format(dateTimeFormatter) + " " + s);
         });
     }
 
-    public List<Marcacao> getMarcacoes() {
+    public List<Mark> getMarcacoes() {
         return marcacoes;
     }
 
-    public void setMarcacoes(List<Marcacao> marcacoes) {
+    public void setMarcacoes(List<Mark> marcacoes) {
         this.marcacoes = marcacoes;
     }
 

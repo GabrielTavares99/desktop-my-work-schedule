@@ -1,10 +1,11 @@
-import myworktime.view.MainView;
+import managers.MarkManager;
+import view.MainView;
 
 public class TesteApp {
 
     public static void main(String[] args) {
 
-        MarcacaoManager marcacaoManager = MarcacaoManager.getInstance();
+        MarkManager markManager = MarkManager.getInstance();
 
         MainView mainView = new MainView();
 
@@ -12,12 +13,12 @@ public class TesteApp {
 //        while (opcao != 99) {
 //            Scanner scanner = new Scanner(System.in);
 //            opcao = scanner.nextInt();
-//            marcacaoManager.fazerMarcacao();
+//            markManager.fazerMarcacao();
 //        }
-//        MarcacaoRepository marcacaoRepository = new MarcacaoRepository();
-//        List<Marcacao> todas = marcacaoRepository.todas();
-//        marcacaoManager.setMarcacoes(todas);
-//        long minutosTrabalhados = marcacaoManager.calcularTempoPorDia(LocalDate.of(2019, Month.MARCH, 5));
-//        System.out.println(marcacaoManager.formataMinutosTrabalhadosEmHoras(minutosTrabalhados));
+//        MarkRepository marcacaoRepository = new MarkRepository();
+//        List<Mark> todas = marcacaoRepository.todas();
+//        markManager.setMarcacoes(todas);
+//        long minutosTrabalhados = markManager.calcularTempoPorDia(LocalDate.of(2019, Month.MARCH, 5));
+//        System.out.println(markManager.formataMinutosTrabalhadosEmHoras(minutosTrabalhados));
     }
 }

@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringJoiner;
 
-public class Marcacao {
+public class Mark {
 
     private LocalDateTime horaInicio;
     private String descricao;
     private LocalDateTime horaFim;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-    public Marcacao(String descricao, LocalDateTime horaInicio, LocalDateTime horaFim) {
+    public Mark(String descricao, LocalDateTime horaInicio, LocalDateTime horaFim) {
         this.horaInicio = horaInicio;
         this.descricao = descricao;
         this.horaFim = horaFim;
